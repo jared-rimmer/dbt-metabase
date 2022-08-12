@@ -1,14 +1,10 @@
-## dbt-metabase
-
-{% note %}
 
 **Note:** Currently only setup for use with Postgres
 
-{% endnote %}
 
 `dbt-metabase` is a dbt package that models the Metabase application database which contains detailed information about users, usage, questions and dashboards.
 
-Inspired by this thread [Metabase Metadata SQL]("https://discourse.metabase.com/t/metabase-metadata-sql/3688")
+Inspired by this thread [Metabase Metadata SQL](https://discourse.metabase.com/t/metabase-metadata-sql/3688)
 
 ## Development
 
@@ -56,4 +52,18 @@ make setup-metabase
 
 ```sh
 docker-compose up
+```
+
+### Bringing down the Environment
+
+#### Using the Makefile 
+
+```sh
+make down
+```
+
+#### Using docker compose
+
+```sh
+docker-compose down
 ```
