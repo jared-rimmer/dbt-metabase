@@ -15,7 +15,14 @@ setup-db: ## Sets up the Postgres database using docker compose and creates a da
 	DATABASE_CONTAINER_ID=$$(docker ps -a --filter "name=database"  --format "{{.ID}}"); \
 	echo $$DATABASE_CONTAINER_ID; \
 	sleep 10; \
-	docker exec -it $$DATABASE_CONTAINER_ID psql -U root dbt --command "CREATE DATABASE metabase"; 
+	docker exec -it $$DATABASE_CONTAINER_ID psql -U root dbt --command "CREATE DATABASE metabase";
+
+.PHONY: db-connect
+db-connect: 
+	\@
+	DATABASE_CONTAINER_ID=$$(docker ps -a --filter "name=database"  --format "{{.ID}}"); \
+	docker exec -it $$DATABASE_CONTAINER_ID psql -U root dbt
+
 
 
 .PHONY: down
