@@ -1,6 +1,6 @@
 with dashboards as (
   select *
-  from {{ ref('stg_metabase__report_dashboard_tmp')}}
+  from {{ ref('stg_metabase__report_dashboards')}}
 )
 
 select 
