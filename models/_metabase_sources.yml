@@ -1,0 +1,80 @@
+version: 2
+
+sources:
+  - name: metabase
+    schema: "{{ var('metabase_schema', 'metabase') }}"
+    database: "{% if target.type != 'spark'%}{{ var('metabase_database', target.database) }}{% endif %}"
+    tables:
+      - name: activity
+      - name: application_permissions_revision
+      - name: bookmark_ordering
+      - name: card_bookmark
+      - name: card_label
+      - name: collection
+      - name: collection_bookmark
+      - name: collection_permission_graph_revision
+      - name: computation_job
+      - name: computation_job_result
+      - name: core_session
+      - name: core_user
+      - name: dashboard_bookmark
+      - name: dashboard_favorite
+      - name: dashboardcard_series
+      - name: data_migrations
+      - name: databasechangelog
+      - name: databasechangeloglock
+      - name: dependency
+      - name: dimension
+      - name: group_table_access_policy
+      - name: label
+      - name: login_history
+      - name: metabase_database_internal # Source is called metabase_database but have to change due to env var conflict
+        identifier: metabase_database 
+      - name: metabase_field
+      - name: metabase_fieldvalues
+      - name: metabase_table
+      - name: metric
+      - name: metric_important_field
+      - name: moderation_review
+      - name: native_query_snippet
+      - name: permissions
+      - name: permissions_group
+      - name: permissions_group_membership
+      - name: permissions_revision
+      - name: persisted_info
+      - name: pulse
+      - name: pulse_card
+      - name: pulse_channel
+      - name: pulse_channel_recipient
+      - name: qrtz_blob_triggers
+      - name: qrtz_calendars
+      - name: qrtz_cron_triggers
+      - name: qrtz_fired_triggers
+      - name: qrtz_job_details
+      - name: qrtz_locks
+      - name: qrtz_paused_trigger_grps
+      - name: qrtz_scheduler_state
+      - name: qrtz_simple_triggers
+      - name: qrtz_simprop_triggers
+      - name: qrtz_triggers
+      - name: query
+      - name: query_cache
+      - name: query_execution # Can see downloads here csv-download, xlsx-download in context column
+      - name: report_card
+      - name: report_cardfavorite
+      - name: report_dashboard
+      - name: report_dashboardcard
+      - name: revision
+      - name: secret
+      - name: segment
+      - name: setting
+      - name: task_history
+      - name: timeline
+      - name: timeline_event
+      - name: view_log       
+                   
+                                 
+                        
+
+
+

@@ -1,0 +1,1 @@
+select * from {{ var('group_table_access_policy') }}

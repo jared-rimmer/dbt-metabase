@@ -18,3 +18,7 @@ clean-targets:
 seeds:
   +schema: raw_data
   +quote_columns: false
+
+vars:
+  metabase_schema: public 
+  metabase_database: metabase 
