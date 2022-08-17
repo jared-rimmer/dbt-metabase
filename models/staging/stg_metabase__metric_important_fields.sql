@@ -1,0 +1,1 @@
+select * from {{ var('metric_important_field') }}

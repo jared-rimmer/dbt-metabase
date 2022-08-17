@@ -1,0 +1,1 @@
+select * from {{ var('collection_permission_graph_revision') }}

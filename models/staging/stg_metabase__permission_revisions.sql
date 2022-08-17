@@ -1,0 +1,1 @@
+select * from {{ var('permissions_revision') }}

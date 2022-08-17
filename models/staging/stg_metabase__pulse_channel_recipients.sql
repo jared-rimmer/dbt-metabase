@@ -1,0 +1,1 @@
+select * from {{ var('pulse_channel_recipient') }}
