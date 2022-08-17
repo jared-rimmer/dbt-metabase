@@ -59,7 +59,7 @@ sources:
       - name: qrtz_triggers
       - name: query
       - name: query_cache
-      - name: query_execution
+      - name: query_execution # Can see downloads here csv-download, xlsx-download in context column
       - name: report_card
       - name: report_cardfavorite
       - name: report_dashboard
