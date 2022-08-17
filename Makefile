@@ -19,7 +19,6 @@ setup-db: ## Sets up the Postgres database using docker compose and creates a da
 
 .PHONY: db-connect
 db-connect: 
-	\@
 	DATABASE_CONTAINER_ID=$$(docker ps -a --filter "name=database"  --format "{{.ID}}"); \
 	docker exec -it $$DATABASE_CONTAINER_ID psql -U root dbt
 
