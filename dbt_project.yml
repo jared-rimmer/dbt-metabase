@@ -62,7 +62,7 @@ vars:
     group_table_access_policy: "{{ source('metabase', 'group_table_access_policy') }}"
     label: "{{ source('metabase', 'label') }}"
     login_history: "{{ source('metabase', 'login_history') }}"
-    # metabase_database: "{{ source('metabase', 'metabase_database') }}"
+    metabase_database_internal: "{{ source('metabase', 'metabase_database_internal') }}" # Source is called metabase_database but have to change due to env var conflict
     metabase_field: "{{ source('metabase', 'metabase_field') }}"
     metabase_fieldvalues: "{{ source('metabase', 'metabase_fieldvalues') }}"
     metabase_table: "{{ source('metabase', 'metabase_table') }}"
