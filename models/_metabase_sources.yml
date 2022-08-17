@@ -28,7 +28,8 @@ sources:
       - name: group_table_access_policy
       - name: label
       - name: login_history
-      # - name: metabase_database
+      - name: metabase_database_internal # Source is called metabase_database but have to change due to env var conflict
+        identifier: metabase_database 
       - name: metabase_field
       - name: metabase_fieldvalues
       - name: metabase_table
