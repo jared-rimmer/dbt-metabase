@@ -51,7 +51,15 @@ make setup-metabase
 #### Using docker compose
 
 ```sh
-docker-compose up
+docker-compose up -d database
+
+docker ps -a --filter "name=database" --format "{{.ID}}"
+
+# DATABASE_CONTAINER_ID is the output of the above docker ps command
+docker exec -it <DATABASE_CONTAINER_ID> psql -U root dbt --command "CREATE DATABASE metabase";
+
+docker-compose up -d metabase
+
 ```
 
 ### Bringing down the Environment
