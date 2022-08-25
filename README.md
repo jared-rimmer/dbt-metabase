@@ -61,6 +61,28 @@ docker exec -it <DATABASE_CONTAINER_ID> psql -U root dbt --command "CREATE DATAB
 docker-compose up -d metabase
 
 ```
+### Connecting to the docker-compose Postgres Database
+
+```sh
+make db-connect
+```
+
+#### Using docker compose
+
+```sh
+docker ps -a --filter "name=database"  --format "{{.ID}}"
+
+# DATABASE_CONTAINER_ID is the output of the above docker ps command
+docker exec -it <DATABASE_CONTAINER_ID> psql -U root dbt
+```
+
+Useful Postgres commands
+
+```sh
+\c metabase # connect to the metabase database
+\x on # Turn expanded display on. Makes viewing easier when working in terminal
+\dn # List schemas
+```
 
 ### Bringing down the Environment
 
