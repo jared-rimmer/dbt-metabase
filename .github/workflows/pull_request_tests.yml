@@ -75,7 +75,6 @@ jobs:
 
       - name: Setup dbt
         run: |
-          cp integration_tests/ci/sample.profiles.yml ~/.dbt/profiles.yml
           pip install --upgrade pip wheel setuptools
           pip install -Iv dbt-${{ matrix.warehouse }}==${{ matrix.dbt_version }} --upgrade
           dbt deps
