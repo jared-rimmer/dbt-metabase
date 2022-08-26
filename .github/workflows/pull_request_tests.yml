@@ -8,6 +8,14 @@ on:
 env:
   DBT_PROFILES_DIR: ./ci
 
+ # Postgres Connection
+  POSTGRES_TEST_HOST: ${{ secrets.POSTGRES_TEST_HOST }}
+  POSTGRES_TEST_USER: ${{ secrets.POSTGRES_TEST_USER }}
+  POSTGRES_TEST_PASS: ${{ secrets.POSTGRES_TEST_PASS }}
+  POSTGRES_TEST_PORT: ${{ secrets.POSTGRES_TEST_PORT }}
+  POSTGRES_TEST_DBNAME: ${{ secrets.POSTGRES_TEST_DBNAME }}
+
+
 jobs:
   pull_request_tests:
     name: pull_request_tests
@@ -15,6 +23,28 @@ jobs:
     defaults:
       run:
         working-directory: ./integration_tests
+
+    strategy:
+      matrix:
+        dbt_version: ["1.2.0"]
+        warehouse: ["postgres"]
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_TEST_DBNAME }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_TEST_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_TEST_PASS }}
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432  
 
     steps:
       - name: Check Out
