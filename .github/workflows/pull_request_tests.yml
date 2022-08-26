@@ -49,3 +49,26 @@ jobs:
     steps:
       - name: Check Out
         uses: actions/checkout@v2
+
+      - name: Set SCHEMA_SUFFIX env
+        run: | 
+          echo "SCHEMA_SUFFIX=$(echo ${DBT_VERSION%.*} | tr . _)" >> $GITHUB_ENV
+        env:
+          DBT_VERSION: ${{ matrix.dbt_version }}
+
+      - name: Set DEFAULT_TARGET env
+        run: |
+         echo "DEFAULT_TARGET=${{ matrix.warehouse }}" >> $GITHUB_ENV
+
+      - name: Python setup
+        uses: actions/setup-python@v2
+        with:
+         python-version: "3.8.x"
+
+      - name: Pip cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.dbt_version }}-${{ matrix.warehouse }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.dbt_version }}-${{ matrix.warehouse }}
