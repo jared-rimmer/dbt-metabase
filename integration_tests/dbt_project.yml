@@ -20,5 +20,5 @@ seeds:
   +quote_columns: false
 
 vars:
-  metabase_schema: "github_metabase_dbt{{ env_var('SCHEMA_SUFFIX') }}" 
+  metabase_schema: "github_metabase_dbt" 
   metabase_database: metabase 

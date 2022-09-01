@@ -50,11 +50,11 @@ jobs:
       - name: Check Out
         uses: actions/checkout@v2
 
-      - name: Set SCHEMA_SUFFIX env
-        run: | 
-          echo "SCHEMA_SUFFIX=$(echo ${DBT_VERSION%.*} | tr . _)" >> $GITHUB_ENV
-        env:
-          DBT_VERSION: ${{ matrix.dbt_version }}
+      # - name: Set SCHEMA_SUFFIX env
+      #   run: | 
+      #     echo "SCHEMA_SUFFIX=$(echo ${DBT_VERSION%.*} | tr . _)" >> $GITHUB_ENV
+      #   env:
+      #     DBT_VERSION: ${{ matrix.dbt_version }}
 
       - name: Set DEFAULT_TARGET env
         run: |
