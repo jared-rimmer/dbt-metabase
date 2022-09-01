@@ -79,4 +79,4 @@ jobs:
           pip install -Iv dbt-${{ matrix.warehouse }}==${{ matrix.dbt_version }} --upgrade
           dbt deps
           dbt seed --target ${{ matrix.warehouse }}
-          dbt run --select metabase_questions --target ${{ matrix.warehouse }}
+          dbt run --target ${{ matrix.warehouse }}
