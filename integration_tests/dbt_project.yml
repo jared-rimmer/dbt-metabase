@@ -16,9 +16,8 @@ clean-targets:
     - "dbt_packages"
 
 seeds:
-  +schema: raw_data
   +quote_columns: false
 
 vars:
-  metabase_schema: public 
+  metabase_schema: "github_metabase_dbt" 
   metabase_database: metabase 
