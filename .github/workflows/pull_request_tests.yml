@@ -1,9 +1,7 @@
 name: pull_request_tests
 
 on: 
-  push:
-    branches:
-      - feat/add-ci-cd
+  push
 
 env:
   DBT_PROFILES_DIR: ./ci
