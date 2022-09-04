@@ -2,8 +2,8 @@ version: 2
 
 sources:
   - name: metabase
-    schema: "{{ var('metabase_schema', 'metabase') }}"
     database: "{% if target.type != 'spark'%}{{ var('metabase_database', target.database) }}{% endif %}"
+    schema: "{{ var('metabase_schema', target.schema) }}"
     tables:
       - name: activity
       - name: application_permissions_revision

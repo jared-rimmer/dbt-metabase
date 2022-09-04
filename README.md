@@ -97,3 +97,13 @@ make down
 ```sh
 docker-compose down
 ```
+
+## Running dbt locally
+
+The Metabase Docker image will always build the Metabase internal database in the "public" schema of the "metabase" database in Postgres.
+
+Therefore you will need to overide the **metabase_schema** var when running locally.
+
+```bash
+dbt run --select +metabase_download_activity --vars '{"metabase_schema": "public"}'
+```
