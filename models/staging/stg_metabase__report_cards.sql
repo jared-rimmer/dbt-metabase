@@ -7,10 +7,12 @@ with source as (
 renamed as (
 
   select
-
-    id as card_id,
-    name as card_name,
-    description as card_description,
+    /* Cards are called questions in the Metabase UI
+       Changed terminology to relect this */
+    id as question_id,
+    name as question_name,
+    description as question_description,
+    
     display as display_type,
     dataset_query,    
     query_type,
