@@ -1,0 +1,100 @@
+name: pull_request_tests
+
+on: 
+  push
+
+env:
+  DBT_PROFILES_DIR: ./ci
+
+ # Postgres Connection
+  POSTGRES_TEST_HOST: ${{ secrets.POSTGRES_TEST_HOST }}
+  POSTGRES_TEST_USER: ${{ secrets.POSTGRES_TEST_USER }}
+  POSTGRES_TEST_PASS: ${{ secrets.POSTGRES_TEST_PASS }}
+  POSTGRES_TEST_PORT: ${{ secrets.POSTGRES_TEST_PORT }}
+  POSTGRES_TEST_DBNAME: ${{ secrets.POSTGRES_TEST_DBNAME }}
+
+
+jobs:
+  publish_dbt_docs:
+    name: publish_dbt_docs
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    defaults:
+      run:
+        working-directory: ./integration_tests
+
+    strategy:
+      matrix:
+        dbt_version: ["1.2.0"]
+        warehouse: ["postgres"]
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_TEST_DBNAME }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_TEST_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_TEST_PASS }}
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432  
+
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+
+      - name: Set DEFAULT_TARGET env
+        run: |
+         echo "DEFAULT_TARGET=${{ matrix.warehouse }}" >> $GITHUB_ENV
+
+      - name: Python setup
+        uses: actions/setup-python@v2
+        with:
+         python-version: "3.8.x"
+
+      - name: Pip cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.dbt_version }}-${{ matrix.warehouse }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.dbt_version }}-${{ matrix.warehouse }}
+
+      - name: Install dbt dependencies
+        run: |
+          pip install --upgrade pip wheel setuptools
+          pip install -Iv dbt-${{ matrix.warehouse }}==${{ matrix.dbt_version }} --upgrade
+
+      - name: Test database connection
+        run: dbt debug
+
+      - name: Install dbt packages
+        run: dbt deps
+
+      - name: Seed dbt models
+        run: dbt seed --target ${{ matrix.warehouse }}
+
+      - name: Generate dbt docs
+        run: dbt docs generate
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: 'target'
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+
